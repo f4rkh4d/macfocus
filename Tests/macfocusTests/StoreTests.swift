@@ -27,11 +27,11 @@ final class StoreTests: XCTestCase {
         let s = FocusState(on: true, startedAt: now, duration: 25, notify: true)
         try store.write(s)
         XCTAssertTrue(store.exists())
-        let got = try store.read()
-        XCTAssertEqual(got?.on, true)
-        XCTAssertEqual(got?.duration, 25)
-        XCTAssertEqual(got?.notify, true)
-        XCTAssertEqual(got?.startedAt.timeIntervalSince1970, now.timeIntervalSince1970, accuracy: 1.0)
+        let got = try XCTUnwrap(try store.read())
+        XCTAssertEqual(got.on, true)
+        XCTAssertEqual(got.duration, 25)
+        XCTAssertEqual(got.notify, true)
+        XCTAssertEqual(got.startedAt.timeIntervalSince1970, now.timeIntervalSince1970, accuracy: 1.0)
     }
 
     func testOverwriteState() throws {
